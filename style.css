@@ -16,6 +16,25 @@ body {
     align-items: center;
 }
 
+.number-card {
+    display: flex;
+    gap: 20px;
+}
+
+.number-card-name,
+.number-card-val {
+    font-size: 28px;
+}
+
+.number-card-name {
+    color: gray;
+}
+
+.round-number-title,
+.round-number {
+    font-size: 32px;
+}
+
 .player-choice-section {
     display: flex;
     gap: 15px;
@@ -34,18 +53,4 @@ button.player-choice {
 .scoreboard {
     display: flex;
     gap: 50px;
-}
-
-.score-card {
-    display: flex;
-    gap: 20px;
-}
-
-.score-card-name,
-.score-card-num {
-    font-size: 28px;
-}
-
-.score-card-name {
-    color: gray;
 }

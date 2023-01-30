@@ -6,22 +6,31 @@
     <title>Rock paper scissor</title>
   </head>
   <body>
+    <div class="number-card">
+        <p class="number-card-name round-number-title">Round number: </p>
+        <p class="number-card-val round-number">0</p>
+    </div>
+
     <div class="player-choice-section">
-      <button class="player-choice">Rock</button>
-      <button class="player-choice">Paper</button>
-      <button class="player-choice">Scissor</button>
+      <button class="player-choice rock-choice">Rock</button>
+      <button class="player-choice paper-choice">Paper</button>
+      <button class="player-choice scissor-choice">Scissor</button>
     </div>
+
     <p class="game-message">Make your first move!</p>
+
     <div class="scoreboard">
-      <div class="score-card">
-        <p class="score-card-name">Player</p>
-        <p class="score-card-num">0</p>
+      <div class="number-card">
+        <p class="number-card-name">Player</p>
+        <p class="number-card-val player-score">0</p>
       </div>
-      <div class="score-card">
-        <p class="score-card-name">Computer</p>
-        <p class="score-card-num">0</p>
+
+      <div class="number-card">
+        <p class="number-card-name">Computer</p>
+        <p class="number-card-val computer-score">0</p>
       </div>
     </div>
+
     <script src="game.js"></script>
   </body>
 </html>

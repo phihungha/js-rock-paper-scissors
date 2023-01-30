@@ -1,77 +1,137 @@
-function getComputerChoice() {
-    let choice = Math.floor(Math.random() * 3);
-    switch (choice) {
-        case 0:
-            return "rock";
-        case 1:
-            return "paper";
-        case 2:
-            return "scissor";
-    }
-}
+const Choices = {
+  Rock: Symbol("rock"),
+  Paper: Symbol("paper"),
+  Scissor: Symbol("scissor"),
+};
 
-function getPlayerChoice() {
-    let choice = prompt("Enter your choice (rock, paper, or scissor):");
-    return choice.toLowerCase();
+const MatchResult = {
+  Win: Symbol("win"),
+  Lose: Symbol("lose"),
+  Draw: Symbol("draw"),
+};
+
+function getComputerChoice() {
+  const choice = Math.floor(Math.random() * 3);
+  switch (choice) {
+    case 0:
+      return Choices.Rock;
+    case 1:
+      return Choices.Paper;
+    case 2:
+      return Choices.Scissor;
+  }
 }
 
 function calcResult(playerChoice, computerChoice) {
-    if (playerChoice === computerChoice)
-        return "draw";
+  if (playerChoice === computerChoice) return MatchResult.Draw;
 
-    if (computerChoice == "rock") {
-        if (playerChoice == "paper")
-            return "won";
-        if (playerChoice == "scissor")
-            return "lose";
-    }
+  if (computerChoice === Choices.Rock) {
+    if (playerChoice === Choices.Paper) return MatchResult.Win;
+    if (playerChoice === Choices.Scissor) return MatchResult.Lose;
+  }
 
-    if (computerChoice == "paper") {
-        if (playerChoice == "rock")
-            return "lose";
-        if (playerChoice == "scissor")
-            return "won";
-    }
+  if (computerChoice === Choices.Paper) {
+    if (playerChoice === Choices.Rock) return MatchResult.Lose;
+    if (playerChoice === Choices.Scissor) return MatchResult.Win;
+  }
 
-    if (computerChoice == "scissor") {
-        if (playerChoice == "rock")
-            return "won";
-        if (playerChoice == "paper")
-            return "lose";
-    }
+  if (computerChoice === Choices.Scissor) {
+    if (playerChoice === Choices.Rock) return MatchResult.Win;
+    if (playerChoice === Choices.Paper) return MatchResult.Lose;
+  }
 }
 
-function capitalize(text) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+function getChoiceDisplayName(choice) {
+  switch (choice) {
+    case Choices.Paper:
+      return "Paper";
+    case Choices.Scissor:
+      return "Scissor";
+    case Choices.Rock:
+      return "Rock";
+    default:
+      throw new Error("Illegal choice");
+  }
 }
 
-function game() {
-    let computerScore = 0;
-    let playerScore = 0;
+let round = 0;
+let computerScore = 0;
+let playerScore = 0;
 
-    for (let i = 0; i < 5; i++) {
-        let playerChoice = getPlayerChoice();
-        let computerChoice = getComputerChoice();
-
-        let result = calcResult(playerChoice, computerChoice);
-
-        if (result === "draw") {
-            console.log(`Round ${i + 1}: A draw!`);
-        } else if (result === "won") {
-            console.log(`Round ${i + 1}: You won! ${capitalize(computerChoice)} is beaten by ${capitalize(playerChoice)}`);
-            playerScore++;
-        } else {
-            console.log(`Round ${i + 1}: You lose! ${capitalize(computerChoice)} beats ${capitalize(playerChoice)}`);
-            computerScore++;
-        }
-    }
-
-    if (computerScore > playerScore) {
-        console.log("You lost to the computer!");
-    } else if (computerScore < playerScore) {
-        console.log("You won! Congratulation!");
-    } else {
-        console.log("This is a draw!");
-    }
-    console.log(`Final score: You = ${playerScore} Computer = ${computerScore}`);
+function updatePlayerScore(newScore) {
+  playerScore = newScore;
+  document.querySelector(".player-score").textContent = playerScore;
 }
+
+function updateComputerScore(newScore) {
+  computerScore = newScore;
+  document.querySelector(".computer-score").textContent = computerScore;
+}
+
+function updateRound(newRound) {
+  round = newRound;
+  document.querySelector(".round-number").textContent = round;
+}
+
+function updateGameMessage(newMessage) {
+  document.querySelector(".game-message").textContent = newMessage;
+}
+
+function updateScoreboard(playerChoice) {
+  const computerChoice = getComputerChoice();
+  const result = calcResult(playerChoice, computerChoice);
+
+  let gameMessage = `Computer picked ${getChoiceDisplayName(computerChoice)}.\n`;
+
+  if (result === MatchResult.Draw) {
+    gameMessage += "A draw!";
+  } else if (result === MatchResult.Win) {
+    gameMessage += "You won!";
+    updatePlayerScore(playerScore + 1);
+  } else {
+    gameMessage += "You lose!";
+    updateComputerScore(computerScore + 1);
+  }
+
+  updateGameMessage(gameMessage);
+}
+
+function determineWinner() {
+  let gameMessage;
+  if (computerScore > playerScore) {
+    gameMessage = "You lost to the computer!";
+  } else if (computerScore < playerScore) {
+    gameMessage = "You won! Congratulations!";
+  } else {
+    gameMessage = "This is a draw!";
+  }
+  updateGameMessage(gameMessage);
+}
+
+function startNewGame() {
+  updatePlayerScore(0);
+  updateComputerScore(0);
+  updateRound(0);
+  updateGameMessage("Make your first move!");
+}
+
+function finishRound(playerChoice) {
+  updateScoreboard(playerChoice);
+  if (round < 5) {
+    updateRound(round + 1);
+  } else {
+    determineWinner();
+  }
+}
+
+document.querySelector(".rock-choice").addEventListener("click", () => {
+  finishRound(Choices.Rock);
+});
+
+document.querySelector(".paper-choice").addEventListener("click", () => {
+  finishRound(Choices.Paper);
+});
+
+document.querySelector(".scissor-choice").addEventListener("click", () => {
+  finishRound(Choices.Scissor);
+});
