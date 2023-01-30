@@ -45,7 +45,7 @@ function getChoiceDisplayName(choice) {
             throw new Error("Illegal choice");
     }
 }
-var round = 0;
+var round = 1;
 var computerScore = 0;
 var playerScore = 0;
 function updatePlayerScore(newScore) {
@@ -69,6 +69,12 @@ function updateRound(newRound) {
         elem.textContent = round.toString();
     }
 }
+function updateMatchResultMsg(newMessage) {
+    var elem = document.querySelector(".match-result");
+    if (elem != null) {
+        elem.textContent = newMessage;
+    }
+}
 function setShowElement(elem, isShown) {
     if (isShown) {
         elem.removeAttribute("hidden");
@@ -77,57 +83,56 @@ function setShowElement(elem, isShown) {
         elem.setAttribute("hidden", "");
     }
 }
-function setShowNewGameBtn(isShown) {
+function setShowResultUI(isShown) {
     var newGameBtn = document.querySelector(".new-game");
-    if (newGameBtn != null) {
-        setShowElement(newGameBtn, isShown);
-    }
+    setShowElement(newGameBtn, isShown);
+    var finalResultMsg = document.querySelector(".final-result");
+    setShowElement(finalResultMsg, isShown);
+    var roundNumberTitle = document.querySelector(".round-number-title");
+    setShowElement(roundNumberTitle, !isShown);
+    var roundNumber = document.querySelector(".round-number");
+    setShowElement(roundNumber, !isShown);
     document.querySelectorAll(".player-choice").forEach(function (elem) {
         setShowElement(elem, !isShown);
     });
 }
-function updateGameMessage(newMessage) {
-    var elem = document.querySelector(".game-message");
-    if (elem != null) {
-        elem.textContent = newMessage;
-    }
-}
 function updateScoreboard(playerChoice) {
     var computerChoice = getComputerChoice();
     var result = calcMatchResult(playerChoice, computerChoice);
-    var gameMessage = "Computer picked ".concat(getChoiceDisplayName(computerChoice), ".\n");
+    var matchResultMsg = "Computer picked ".concat(getChoiceDisplayName(computerChoice), ".\n");
     if (result === "draw") {
-        gameMessage += "A draw!";
+        matchResultMsg += "This match is a draw!";
     }
     else if (result === "win") {
-        gameMessage += "You won!";
+        matchResultMsg += "You won this match!";
         updatePlayerScore(playerScore + 1);
     }
     else {
-        gameMessage += "You lose!";
+        matchResultMsg += "You lose this match!";
         updateComputerScore(computerScore + 1);
     }
-    updateGameMessage(gameMessage);
+    updateMatchResultMsg(matchResultMsg);
 }
 function determineWinner() {
-    var gameMessage;
+    var finalResultMsg;
     if (computerScore > playerScore) {
-        gameMessage = "You lost to the computer!";
+        finalResultMsg = "You lost the game! Good luck next time!";
     }
     else if (computerScore < playerScore) {
-        gameMessage = "You won! Congratulations!";
+        finalResultMsg = "You won the game! Congratulations!";
     }
     else {
-        gameMessage = "This is a draw!";
+        finalResultMsg = "This is a draw!";
     }
-    updateGameMessage(gameMessage);
+    var elem = document.querySelector(".final-result");
+    elem.textContent = finalResultMsg;
 }
 function startNewGame() {
     updatePlayerScore(0);
     updateComputerScore(0);
-    updateRound(0);
-    updateGameMessage("Make your first move!");
-    setShowNewGameBtn(false);
+    updateRound(1);
+    updateMatchResultMsg("Make your first move!");
+    setShowResultUI(false);
 }
 function playerChoose(playerChoice) {
     updateScoreboard(playerChoice);
@@ -136,7 +141,7 @@ function playerChoose(playerChoice) {
     }
     else {
         determineWinner();
-        setShowNewGameBtn(true);
+        setShowResultUI(true);
     }
 }
 (_a = document.querySelector(".rock-choice")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
@@ -151,3 +156,4 @@ function playerChoose(playerChoice) {
 (_d = document.querySelector(".new-game")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", function () {
     startNewGame();
 });
+startNewGame();
