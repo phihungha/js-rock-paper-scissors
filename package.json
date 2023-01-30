@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "typescript": "^4.9.4"
+  },
+  "name": "js-rock-paper-scissors",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phihungha/js-rock-paper-scissors.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phihungha/js-rock-paper-scissors/issues"
+  },
+  "homepage": "https://github.com/phihungha/js-rock-paper-scissors#readme",
+  "description": ""
+}
