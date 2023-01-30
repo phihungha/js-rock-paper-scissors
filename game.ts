@@ -76,6 +76,25 @@ function updateRound(newRound: number): void {
   }
 }
 
+function setShowElement(elem: Element, isShown: boolean): void {
+  if (isShown) {
+    elem.removeAttribute("hidden");
+  } else {
+    elem.setAttribute("hidden", "");
+  }
+}
+
+function setShowNewGameBtn(isShown: boolean): void {
+  const newGameBtn = document.querySelector(".new-game");
+  if (newGameBtn != null) {
+    setShowElement(newGameBtn, isShown);
+  }
+
+  document.querySelectorAll(".player-choice").forEach((elem) => {
+    setShowElement(elem, !isShown);
+  });
+}
+
 function updateGameMessage(newMessage: string): void {
   const elem = document.querySelector(".game-message");
   if (elem != null) {
@@ -119,6 +138,7 @@ function startNewGame(): void {
   updateComputerScore(0);
   updateRound(0);
   updateGameMessage("Make your first move!");
+  setShowNewGameBtn(false);
 }
 
 function playerChoose(playerChoice: Choice): void {
@@ -127,6 +147,7 @@ function playerChoose(playerChoice: Choice): void {
     updateRound(round + 1);
   } else {
     determineWinner();
+    setShowNewGameBtn(true);
   }
 }
 
@@ -140,4 +161,8 @@ document.querySelector(".paper-choice")?.addEventListener("click", () => {
 
 document.querySelector(".scissor-choice")?.addEventListener("click", () => {
   playerChoose("scissor");
+});
+
+document.querySelector(".new-game")?.addEventListener("click", () => {
+  startNewGame();
 });

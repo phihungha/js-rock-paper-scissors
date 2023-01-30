@@ -1,4 +1,4 @@
-var _a, _b, _c;
+var _a, _b, _c, _d;
 function getComputerChoice() {
     var choice = Math.floor(Math.random() * 3);
     switch (choice) {
@@ -69,6 +69,23 @@ function updateRound(newRound) {
         elem.textContent = round.toString();
     }
 }
+function setShowElement(elem, isShown) {
+    if (isShown) {
+        elem.removeAttribute("hidden");
+    }
+    else {
+        elem.setAttribute("hidden", "");
+    }
+}
+function setShowNewGameBtn(isShown) {
+    var newGameBtn = document.querySelector(".new-game");
+    if (newGameBtn != null) {
+        setShowElement(newGameBtn, isShown);
+    }
+    document.querySelectorAll(".player-choice").forEach(function (elem) {
+        setShowElement(elem, !isShown);
+    });
+}
 function updateGameMessage(newMessage) {
     var elem = document.querySelector(".game-message");
     if (elem != null) {
@@ -110,6 +127,7 @@ function startNewGame() {
     updateComputerScore(0);
     updateRound(0);
     updateGameMessage("Make your first move!");
+    setShowNewGameBtn(false);
 }
 function playerChoose(playerChoice) {
     updateScoreboard(playerChoice);
@@ -118,6 +136,7 @@ function playerChoose(playerChoice) {
     }
     else {
         determineWinner();
+        setShowNewGameBtn(true);
     }
 }
 (_a = document.querySelector(".rock-choice")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
@@ -128,4 +147,7 @@ function playerChoose(playerChoice) {
 });
 (_c = document.querySelector(".scissor-choice")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", function () {
     playerChoose("scissor");
+});
+(_d = document.querySelector(".new-game")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", function () {
+    startNewGame();
 });

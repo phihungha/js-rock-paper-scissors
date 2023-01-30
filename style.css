@@ -1,56 +1,65 @@
 * {
-    font-family: Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 p {
-    margin: 0px;
+  margin: 0px;
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    justify-content: center;
-    align-items: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
 }
 
 .number-card {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .number-card-name,
 .number-card-val {
-    font-size: 28px;
+  font-size: 28px;
 }
 
 .number-card-name {
-    color: gray;
+  color: gray;
 }
 
 .round-number-title,
 .round-number {
-    font-size: 32px;
+  font-size: 32px;
+}
+
+button.new-game,
+button.player-choice {
+  font-size: 24px;
+}
+
+button.new-game {
+  width: 300px;
+  height: 100px;
 }
 
 .player-choice-section {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 
 button.player-choice {
-    width: 150px;
-    height: 150px;
-    font-size: 24px;
+  width: 150px;
+  height: 150px;
 }
 
 .game-message {
-    font-size: 36px;
+  font-size: 32px;
 }
 
 .scoreboard {
-    display: flex;
-    gap: 50px;
+  display: flex;
+  gap: 50px;
 }
