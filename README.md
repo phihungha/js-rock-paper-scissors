@@ -1,0 +1,1 @@
+View this site at: https://phihungha.github.io/js-rock-paper-scissors/
